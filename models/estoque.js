@@ -119,8 +119,9 @@ class Estoque {
                 if(lastIndex < resultados.length){
                     // Correção do limite da última página
                     const totalProxPagina = lastIndex + limit;
+
                     if(totalProxPagina > resultados.length){
-                        limit = totalProxPagina - resultados.length
+                        limit = resultados.length - lastIndex
                     }
                     resultadosPagina.proxima = {
                         page: page + 1,
@@ -134,7 +135,10 @@ class Estoque {
                     resultadosNomes.push(resultado.nome)
                 })
 
+                
                 resultadosPagina.resultados = resultadosNomes.slice(firstIndex, lastIndex)
+                
+                resultadosPagina.totalPagina = resultadosPagina.resultados.length
 
                 res.status(200).json(resultadosPagina)
             }
