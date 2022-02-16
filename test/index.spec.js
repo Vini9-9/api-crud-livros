@@ -78,3 +78,20 @@ describe("GET - Paginação", () => {
         
     })
 })
+
+describe("GET - erros", () => {
+    it('GET sbn inválido', async () => {
+        const sbn = 24444 
+        const res = await request(app).get('/estoque/'  + sbn)
+        expect(res.statusCode).toEqual(404)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toBe('SBN não localizado')
+    })
+    it('GET sbn tipo inválido', async () => {
+        const sbn = "a" 
+        const res = await request(app).get('/estoque/'  + sbn)
+        expect(res.statusCode).toEqual(406)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toBe('SBN deve ser um número')
+    })
+})
