@@ -7,9 +7,10 @@ describe("app Test", () => {
         const res = await request(app).get('/estoque')
         expect(res.body).toHaveProperty('resultados')
     })
-    it('GET resultados falha', async () => {
-        const res = await request(app).get('/estoque')
-        expect(res.body).toHaveProperty('resultado')
+    it('GET com SBN', async () => {
+        const res = await request(app).get('/estoque/0')
+        console.log(res.body.sbn)
+        expect(res.body.sbn).toBe(0)
     })
         
 })
