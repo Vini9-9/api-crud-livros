@@ -40,7 +40,18 @@ class Estoque {
             const sql = `INSERT INTO Livros SET ?`
 
             conexaoBD.query(sql, livro, (erro) => {
-                erro ? res.status(400).json(erro) : res.status(201).json(livro)
+                if(erro) {
+                    
+                    if(erro.code == 'ER_DUP_ENTRY'){
+                        res.status(400).json({
+                            "message": "SBN já está associado a outro livro"
+                        })
+                    } else {
+                        res.status(400).json(erro)
+                    }
+                } else {
+                    res.status(201).json(livro)
+                }
             })
 
         }
