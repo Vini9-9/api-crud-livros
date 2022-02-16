@@ -85,12 +85,44 @@ class Estoque {
     atualizaPorSbn(sbn, livro, res){
         const sql = `UPDATE Livros SET ? WHERE sbn = ${sbn}`
 
-        const sbnEhValido = !livro.sbn
+
+        var myRe = new RegExp("^[0-9]*$")
+        const sbnEhValido = myRe.exec(sbn)
+        const naoRecebeSbn = !livro.sbn
+        const recebeEstoque = livro.estoque
+        var estoqueEhValido = true
+
+        if(recebeEstoque){
+            estoqueEhValido = parseInt(livro.estoque) > 0 
+        } 
+
+        const validacoes = [
+            {
+                campo: 'sbn',
+                valido: sbnEhValido,
+                mensagem: 'SBN deve ser um número'
+            },
+            {
+                campo: 'estoque',
+                valido: estoqueEhValido,
+                mensagem: 'Estoque deve ser maior que 0'
+            },
+            {
+                campo: 'sbn url',
+                valido: naoRecebeSbn,
+                mensagem: 'SBN não pode ser atualizado'
+            }
+        ]
+        
+        const erros = validacoes.filter( campo => !campo.valido)
+        const existeErro = erros.length
+
+        
         sbn = parseInt(sbn)
-        console.log("sbnEhValido", sbnEhValido)
 
-        if(sbnEhValido){
-
+        if(existeErro) {
+            res.status(406).json(erros)
+        } else {
             conexaoBD.query(sql, livro, (erro, resultados) => {
                 if(erro) {
                     res.status(400).json(erro)
@@ -98,11 +130,7 @@ class Estoque {
                     res.status(200).json({sbn, ...livro})
                 } 
             })
-        } else {
-            res.status(400).json("{'mensagem': 'sbn não pode ser atualizado'}")
-        }
-
-        
+        } 
     }
 
     lista(res, page, limit){
