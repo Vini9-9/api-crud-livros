@@ -11,7 +11,7 @@ class Tabelas {
     }
 
     criarEstoque() {
-        const sql = `CREATE TABLE Livros 
+        const sql = `CREATE TABLE IF NOT EXISTS Livros 
         (sbn int NOT NULL,
             nome varchar(100) NOT NULL,
             autor varchar(100) NOT NULL,
