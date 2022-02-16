@@ -78,6 +78,54 @@ class Estoque {
         
     }
 
+    lista(res, page, limit){
+        const sql = `SELECT * FROM Livros`
+        if(!page && !limit){
+            page = 1
+            limit = 20
+        }
+        conexaoBD.query(sql, (erro, resultados) => {
+            if(erro){
+                res.status(400).json(erro)
+            } else {
+                const firstIndex = (page - 1 ) * limit
+                const lastIndex = page * limit
+                const resultadosPagina = {}
+
+                if(firstIndex > 0){
+
+                    resultadosPagina.anterior = {
+                        page: page - 1,
+                        limit: limit
+                    }
+                }
+
+                if(lastIndex < resultados.length){
+                    // Correção do limite da última página
+                    const totalProxPagina = lastIndex + limit;
+                    if(totalProxPagina > resultados.length){
+                        limit = totalProxPagina - resultados.length
+                    }
+                    resultadosPagina.proxima = {
+                        page: page + 1,
+                        limit: limit
+                    }
+                }
+
+                const resultadosNomes = []
+
+                resultados.forEach( resultado => {
+                    resultadosNomes.push(resultado.nome)
+                })
+
+                resultadosPagina.resultados = resultadosNomes.slice(firstIndex, lastIndex)
+
+                res.status(200).json(resultadosPagina)
+            }
+            
+        })
+    }
+
     buscaPorSbn(sbn, res){
         const sql = `SELECT * FROM Livros WHERE sbn = ${sbn}`
 

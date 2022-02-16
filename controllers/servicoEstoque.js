@@ -4,7 +4,12 @@ const app = configExpress()
 
     /* GET */
 
-    app.get('/estoque', (req, res) => res.send('Você está na rota de estoque'))
+    app.get('/estoque', (req, res) => {
+        //modelo: ?page=1&limit=5
+        const page = parseInt(req.query.page)
+        const limit = parseInt(req.query.limit) 
+        Estoque.lista(res, page, limit)
+    })
 
     app.get('/estoque/:sbn', (req, res) => {
         const sbn = parseInt(req.params.sbn)
