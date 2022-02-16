@@ -45,3 +45,36 @@ describe("app Test rotas caminho feliz", () => {
         expect(res.body.sbn).toBe(sbn)
     })
 })
+
+describe("GET - Paginação", () => {
+    it('Resultados totalPagina', async () => {
+        const res = await request(app).get('/estoque')
+        expect(res.statusCode).toEqual(200)
+        expect(res.body).toHaveProperty('totalPagina')
+        const resultados = res.body.resultados
+        expect(res.body.totalPagina).toBe(resultados.length)
+        
+    })
+    it('Resultados proxima página', async () => {
+        let page = 1
+        const limit = 3
+        const res = await request(app).get(`/estoque?page=${page}&limit=${limit}`)
+        
+        expect(res.statusCode).toEqual(200)
+
+        expect(res.body).toHaveProperty('proxima')
+        expect(res.body.proxima.page).toBe(page + 1)
+        
+    })
+    it('Resultados página anterior', async () => {
+        let page = 2
+        const limit = 3
+        const res = await request(app).get(`/estoque?page=${page}&limit=${limit}`)
+        
+        expect(res.statusCode).toEqual(200)
+
+        expect(res.body).toHaveProperty('anterior')
+        expect(res.body.anterior.page).toBe(page - 1)
+        
+    })
+})
