@@ -2,7 +2,7 @@ const request = require('supertest')
 const app = require('../controllers/servicoEstoque')
 
 
-/* describe("app Test rotas caminho feliz", () => {
+describe("app Test rotas caminho feliz", () => {
     it('GET resultados', async () => {
         const res = await request(app).get('/estoque')
         expect(res.statusCode).toEqual(200)
@@ -96,7 +96,7 @@ describe("GET - erros", () => {
         expect(res.body).toHaveProperty('message')
         expect(res.body.message).toBe('SBN deve ser um número')
     })
-}) */
+})
 
 describe("POST - erros", () => {
     it('POST sbn inválido', async () => {
