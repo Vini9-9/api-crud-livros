@@ -2,14 +2,16 @@ const request = require('supertest')
 const app = require('../controllers/servicoEstoque')
 
 
-describe("app Test rotas", () => {
+describe("app Test rotas caminho feliz", () => {
     it('GET resultados', async () => {
         const res = await request(app).get('/estoque')
+        expect(res.statusCode).toEqual(200)
         expect(res.body).toHaveProperty('resultados')
     })
     it('GET por SBN', async () => {
         const sbn = 0 
         const res = await request(app).get('/estoque/' + sbn)
+        expect(res.statusCode).toEqual(200)
         expect(res.body.sbn).toBe(sbn)
     })
     it('POST', async () => {
@@ -22,6 +24,7 @@ describe("app Test rotas", () => {
             "estoque": "99",
             "descricao": "livro sobre testes x"
         })
+        expect(res.statusCode).toEqual(201)
         expect(res.body.sbn).toBe(`${sbn}`)
     })
     it('PATCH por SBN', async () => {
@@ -32,12 +35,13 @@ describe("app Test rotas", () => {
         .send({
             "estoque": `${novoEstoque}`,
         })
+        expect(res.statusCode).toEqual(200)
         expect(res.body.estoque).toBe(`${novoEstoque}`)
     })
     it('DELETE por SBN', async () => {
         const sbn = 999 
         const res = await request(app).delete('/estoque/' + sbn)
+        expect(res.statusCode).toEqual(200)
         expect(res.body.sbn).toBe(sbn)
     })
-        
 })
