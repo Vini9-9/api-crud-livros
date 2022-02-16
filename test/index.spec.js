@@ -218,3 +218,23 @@ describe("PATCH - erros", () => {
     })
     
 })
+
+describe("DELETE - erros", () => {
+    it('sbn tipo inválido', async () => {
+        const sbn = "a" 
+        const res = await request(app).delete('/estoque/' + sbn)
+
+        expect(res.statusCode).toEqual(406)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toBe('SBN deve ser um número')
+    })
+    it('sbn inválido', async () => {
+        const sbn = 99999 
+        const res = await request(app).delete('/estoque/' + sbn)
+
+        expect(res.statusCode).toEqual(404)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toBe('SBN não localizado')
+    })
+    
+})
