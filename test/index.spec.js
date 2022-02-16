@@ -172,3 +172,49 @@ describe("POST - erros", () => {
         expect(res.body[0].mensagem).toBe('Autor deve ser preenchido')
     })
 })
+
+describe("PATCH - erros", () => {
+    it('Atualizar o sbn', async () => {
+        const sbn = 0 
+        const novoSbn = 1114 
+        const res = await request(app).patch('/estoque/' + sbn)
+        .send({
+            "nome": "Testes X",
+            "sbn": `${novoSbn}`,
+        })
+
+        const resBody = res.body[0]
+
+        expect(res.statusCode).toEqual(406)
+        expect(resBody).toHaveProperty('mensagem')
+        expect(resBody.mensagem).toBe('SBN não pode ser atualizado')
+    })
+    it('sbn inválido', async () => {
+        const sbn = "a" 
+        const res = await request(app).patch('/estoque/' + sbn)
+        .send({
+            "nome": "Testes X",
+        })
+        const resBody = res.body[0]
+
+        expect(res.statusCode).toEqual(406)
+        expect(resBody).toHaveProperty('mensagem')
+        expect(resBody.mensagem).toBe('SBN deve ser um número')
+    })
+    it('estoque inválido', async () => {
+        const sbn = 0 
+        const res = await request(app).patch('/estoque/' + sbn)
+        .send({
+            "nome": "Testes X",
+            "estoque": "0",
+            "descricao": "livro sobre testes x"
+        })
+
+        const resBody = res.body[0]
+
+        expect(res.statusCode).toEqual(406)
+        expect(resBody).toHaveProperty('mensagem')
+        expect(resBody.mensagem).toBe('Estoque deve ser maior que 0')
+    })
+    
+})
