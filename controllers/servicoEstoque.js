@@ -1,3 +1,4 @@
+const Estoque = require('../models/estoque')
 const configExpress = require('../config/configExpress')
 const app = configExpress()
 
@@ -9,7 +10,7 @@ const app = configExpress()
 
     app.post('/estoque', (req, res) => {
         var livro = req.body
-        console.log(livro)
+        Estoque.adiciona(livro, res)
     })
 
     module.exports = app
