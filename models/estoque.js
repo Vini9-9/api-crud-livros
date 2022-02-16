@@ -61,24 +61,34 @@ class Estoque {
     removePorSbn(sbn, res){
         const sql = `DELETE FROM Livros WHERE sbn = ${sbn}`
 
-        conexaoBD.query(sql, (erro, resultados) => {
-            if(erro){
-                res.status(400).json(erro)
-            } else { 
-                if(resultados.affectedRows > 0){
-                    res.status(200).json({
-                        "sbn": sbn,
-                        "message": "Deletado com sucesso"
-                    })
-                } else {
-                    res.status(404).json({
-                        "message": "SBN não localizado"
-                    })
+        console.log("removePorSbn")
+
+        var myRe = new RegExp("^[0-9]*$")
+        const sbnEhValido = myRe.exec(sbn)
+        if(!sbnEhValido){
+            res.status(406).json({
+                "message": "SBN deve ser um número"
+            })
+        } else {
+            conexaoBD.query(sql, (erro, resultados) => {
+                if(erro){
+                    res.status(400).json(erro)
+                } else { 
+                    if(resultados.affectedRows > 0){
+                        res.status(200).json({
+                            "sbn": sbn,
+                            "message": "Deletado com sucesso"
+                        })
+                    } else {
+                        res.status(404).json({
+                            "message": "SBN não localizado"
+                        })
+                    }
+                    
+                    
                 }
-                
-                
-            }
-        })
+            })
+        }
          
     }
 
