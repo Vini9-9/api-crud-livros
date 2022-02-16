@@ -2,7 +2,7 @@ const request = require('supertest')
 const app = require('../controllers/servicoEstoque')
 
 
-describe("app Test rotas caminho feliz", () => {
+/* describe("app Test rotas caminho feliz", () => {
     it('GET resultados', async () => {
         const res = await request(app).get('/estoque')
         expect(res.statusCode).toEqual(200)
@@ -83,6 +83,7 @@ describe("GET - erros", () => {
     it('GET sbn inválido', async () => {
         const sbn = 24444 
         const res = await request(app).get('/estoque/'  + sbn)
+        
         expect(res.statusCode).toEqual(404)
         expect(res.body).toHaveProperty('message')
         expect(res.body.message).toBe('SBN não localizado')
@@ -90,8 +91,84 @@ describe("GET - erros", () => {
     it('GET sbn tipo inválido', async () => {
         const sbn = "a" 
         const res = await request(app).get('/estoque/'  + sbn)
+        
         expect(res.statusCode).toEqual(406)
         expect(res.body).toHaveProperty('message')
         expect(res.body.message).toBe('SBN deve ser um número')
+    })
+}) */
+
+describe("POST - erros", () => {
+    it('POST sbn inválido', async () => {
+        const sbn = 0 
+        const res = await request(app).post('/estoque/')
+        .send({
+            "nome": "Testes X",
+            "sbn": `${sbn}`,
+            "autor": "Criador do teste x",
+            "estoque": "99",
+            "descricao": "livro sobre testes x"
+        })
+
+        expect(res.statusCode).toEqual(400)
+        expect(res.body).toHaveProperty('message')
+        expect(res.body.message).toBe('SBN já está associado a outro livro')
+    })
+    it('POST sbn não informado', async () => {
+        const sbn = 0 
+        const res = await request(app).post('/estoque/')
+        .send({
+            "nome": "Testes X",
+            "autor": "Criador do teste x",
+            "estoque": "99",
+            "descricao": "livro sobre testes x"
+        })
+
+        expect(res.statusCode).toEqual(400)
+        expect(res.body[0]).toHaveProperty('mensagem')
+        expect(res.body[0].mensagem).toBe('SBN deve ser preenchido')
+    })
+    it('POST estoque inválido', async () => {
+        const sbn = 11111 
+        const res = await request(app).post('/estoque/')
+        .send({
+            "nome": "Testes X",
+            "sbn": `${sbn}`,
+            "autor": "Criador do teste x",
+            "estoque": "a",
+            "descricao": "livro sobre testes x"
+        })
+
+        expect(res.statusCode).toEqual(400)
+        expect(res.body[0]).toHaveProperty('mensagem')
+        expect(res.body[0].mensagem).toBe('Estoque deve ser maior que 0')
+    })
+    it('POST nome não informado', async () => {
+        const sbn = 11112 
+        const res = await request(app).post('/estoque/')
+        .send({
+            "sbn": `${sbn}`,
+            "autor": "Criador do teste x",
+            "estoque": "10",
+            "descricao": "livro sobre testes x"
+        })
+
+        expect(res.statusCode).toEqual(400)
+        expect(res.body[0]).toHaveProperty('mensagem')
+        expect(res.body[0].mensagem).toBe('Nome deve ser preenchido')
+    })
+    it('POST autor não informado', async () => {
+        const sbn = 11112 
+        const res = await request(app).post('/estoque/')
+        .send({
+            "nome": "Testes X",
+            "sbn": `${sbn}`,
+            "estoque": "10",
+            "descricao": "livro sobre testes x"
+        })
+
+        expect(res.statusCode).toEqual(400)
+        expect(res.body[0]).toHaveProperty('mensagem')
+        expect(res.body[0].mensagem).toBe('Autor deve ser preenchido')
     })
 })
