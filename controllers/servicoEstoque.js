@@ -6,6 +6,11 @@ const app = configExpress()
 
     app.get('/estoque', (req, res) => res.send('Você está na rota de estoque'))
 
+    app.get('/estoque/:sbn', (req, res) => {
+        const sbn = parseInt(req.params.sbn)
+        Estoque.buscaPorSbn(sbn, res)
+    })
+
     /* POST */
 
     app.post('/estoque', (req, res) => {
