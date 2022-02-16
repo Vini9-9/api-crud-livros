@@ -1,0 +1,28 @@
+{
+  "name": "api-crud-livros",
+  "version": "1.0.0",
+  "description": "microserviço para expor APIs de CRUD de livros",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vini9-9/api-crud-livros.git"
+  },
+  "author": "Vinicius Pessoa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vini9-9/api-crud-livros/issues"
+  },
+  "homepage": "https://github.com/Vini9-9/api-crud-livros#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
+  }
+}
