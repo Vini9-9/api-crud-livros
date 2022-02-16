@@ -149,20 +149,31 @@ class Estoque {
     buscaPorSbn(sbn, res){
         const sql = `SELECT * FROM Livros WHERE sbn = ${sbn}`
 
-        conexaoBD.query(sql, (erro, resultados) => {
-            if(erro) {
-                res.status(400).json(erro)
-            } else {
-                if(resultados[0]){
-                    res.status(200).json(resultados[0])
-                } else {
-                    res.status(404).json({
-                        "message": "SBN não localizado"
-                    })
-                }
+        var myRe = new RegExp("^[0-9]*$")
+        const sbnEhValido = myRe.exec(sbn)
 
-            } 
-        })
+        if(sbnEhValido){
+            conexaoBD.query(sql, (erro, resultados) => {
+                if(erro) {
+                    res.status(400).json(erro)
+                } else {
+                    if(resultados[0]){
+                        res.status(200).json(resultados[0])
+                    } else {
+                        res.status(404).json({
+                            "message": "SBN não localizado"
+                        })
+                    }
+    
+                } 
+            })
+        } else {
+            res.status(406).json({
+                "message": "SBN deve ser um número"
+            })
+        }
+
+        
     }
 
 
