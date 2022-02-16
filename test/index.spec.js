@@ -7,7 +7,7 @@ describe("app Test rotas", () => {
         const res = await request(app).get('/estoque')
         expect(res.body).toHaveProperty('resultados')
     })
-    it('GET com SBN', async () => {
+    it('GET por SBN', async () => {
         const sbn = 0 
         const res = await request(app).get('/estoque/' + sbn)
         expect(res.body.sbn).toBe(sbn)
@@ -24,7 +24,7 @@ describe("app Test rotas", () => {
         })
         expect(res.body.sbn).toBe(`${sbn}`)
     })
-    it('PATCH', async () => {
+    it('PATCH por SBN', async () => {
         const sbn = 1 
         const novoEstoque = 99 
 
@@ -32,8 +32,12 @@ describe("app Test rotas", () => {
         .send({
             "estoque": `${novoEstoque}`,
         })
-        //expect(res.body.sbn).toBe(`${sbn}`)
         expect(res.body.estoque).toBe(`${novoEstoque}`)
+    })
+    it('DELETE por SBN', async () => {
+        const sbn = 999 
+        const res = await request(app).delete('/estoque/' + sbn)
+        expect(res.body.sbn).toBe(sbn)
     })
         
 })
