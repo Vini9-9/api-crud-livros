@@ -59,7 +59,8 @@ class Estoque {
     atualizaPorSbn(sbn, livro, res){
         const sql = `UPDATE Livros SET ? WHERE sbn = ${sbn}`
 
-        const sbnEhValido = livro.sbn.includes(!sbn)
+        const sbnEhValido = !livro.sbn
+        sbn = parseInt(sbn)
         console.log("sbnEhValido", sbnEhValido)
 
         if(sbnEhValido){

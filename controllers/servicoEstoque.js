@@ -27,7 +27,7 @@ const app = configExpress()
 
     app.patch('/estoque/:sbn', (req, res) => {
         var livro = req.body
-        const sbn = parseInt(req.params.sbn)
+        const sbn = req.params.sbn
         Estoque.atualizaPorSbn(sbn, livro, res)
     })
 
