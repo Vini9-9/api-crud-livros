@@ -56,6 +56,28 @@ class Estoque {
          
     }
 
+    atualizaPorSbn(sbn, livro, res){
+        const sql = `UPDATE Livros SET ? WHERE sbn = ${sbn}`
+
+        const sbnEhValido = livro.sbn.includes(!sbn)
+        console.log("sbnEhValido", sbnEhValido)
+
+        if(sbnEhValido){
+
+            conexaoBD.query(sql, livro, (erro, resultados) => {
+                if(erro) {
+                    res.status(400).json(erro)
+                } else {
+                    res.status(200).json({sbn, ...livro})
+                } 
+            })
+        } else {
+            res.status(400).json("{'mensagem': 'sbn não pode ser atualizado'}")
+        }
+
+        
+    }
+
 
 }
 

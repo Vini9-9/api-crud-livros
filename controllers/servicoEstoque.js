@@ -13,6 +13,14 @@ const app = configExpress()
         Estoque.adiciona(livro, res)
     })
 
+    /* PATCH */
+
+    app.patch('/estoque/:sbn', (req, res) => {
+        var livro = req.body
+        const sbn = parseInt(req.params.sbn)
+        Estoque.atualizaPorSbn(sbn, livro, res)
+    })
+
     /* DELETE */
 
     app.delete('/estoque/:sbn', (req, res) => {
