@@ -13,4 +13,11 @@ const app = configExpress()
         Estoque.adiciona(livro, res)
     })
 
+    /* DELETE */
+
+    app.delete('/estoque/:sbn', (req, res) => {
+        const sbn = parseInt(req.params.sbn)
+        Estoque.removePorSbn(sbn, res)
+    })
+
     module.exports = app

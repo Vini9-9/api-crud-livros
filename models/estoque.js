@@ -45,7 +45,15 @@ class Estoque {
 
         }
 
-        
+    }
+
+    removePorSbn(sbn, res){
+        const sql = `DELETE FROM Livros WHERE sbn = ${sbn}`
+
+        conexaoBD.query(sql, (erro, resultados) => {
+            erro ? res.status(400).json(erro) : res.status(200).json(resultados)
+        })
+         
     }
 
 
