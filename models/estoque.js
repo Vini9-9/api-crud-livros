@@ -51,7 +51,14 @@ class Estoque {
         const sql = `DELETE FROM Livros WHERE sbn = ${sbn}`
 
         conexaoBD.query(sql, (erro, resultados) => {
-            erro ? res.status(400).json(erro) : res.status(200).json(resultados)
+            if(erro){
+                res.status(400).json(erro)
+            } else { 
+                res.status(200).json({
+                    "sbn": sbn,
+                    "message": "Deletado com sucesso"
+                })
+            }
         })
          
     }
