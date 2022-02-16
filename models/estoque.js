@@ -61,8 +61,6 @@ class Estoque {
     removePorSbn(sbn, res){
         const sql = `DELETE FROM Livros WHERE sbn = ${sbn}`
 
-        console.log("removePorSbn")
-
         var myRe = new RegExp("^[0-9]*$")
         const sbnEhValido = myRe.exec(sbn)
         if(!sbnEhValido){
