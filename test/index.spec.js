@@ -8,8 +8,9 @@ describe("app Test rotas", () => {
         expect(res.body).toHaveProperty('resultados')
     })
     it('GET com SBN', async () => {
-        const res = await request(app).get('/estoque/0')
-        expect(res.body.sbn).toBe(0)
+        const sbn = 0 
+        const res = await request(app).get('/estoque/' + sbn)
+        expect(res.body.sbn).toBe(sbn)
     })
     it('POST', async () => {
         const sbn = 999 
@@ -22,6 +23,17 @@ describe("app Test rotas", () => {
             "descricao": "livro sobre testes x"
         })
         expect(res.body.sbn).toBe(`${sbn}`)
+    })
+    it('PATCH', async () => {
+        const sbn = 1 
+        const novoEstoque = 99 
+
+        const res = await request(app).patch('/estoque/' + sbn)
+        .send({
+            "estoque": `${novoEstoque}`,
+        })
+        //expect(res.body.sbn).toBe(`${sbn}`)
+        expect(res.body.estoque).toBe(`${novoEstoque}`)
     })
         
 })
