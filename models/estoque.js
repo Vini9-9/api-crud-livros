@@ -54,10 +54,18 @@ class Estoque {
             if(erro){
                 res.status(400).json(erro)
             } else { 
-                res.status(200).json({
-                    "sbn": sbn,
-                    "message": "Deletado com sucesso"
-                })
+                if(resultados.affectedRows > 0){
+                    res.status(200).json({
+                        "sbn": sbn,
+                        "message": "Deletado com sucesso"
+                    })
+                } else {
+                    res.status(404).json({
+                        "message": "SBN não localizado"
+                    })
+                }
+                
+                
             }
         })
          
