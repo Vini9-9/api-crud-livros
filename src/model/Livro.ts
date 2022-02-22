@@ -1,5 +1,5 @@
 class Livro {
-    sbn: number;
+    isbn: string;
     nome: string;
     autor: string;
     descricao?: string;
