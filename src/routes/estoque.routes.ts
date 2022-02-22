@@ -1,5 +1,10 @@
 import { Router } from 'express';
 import { LivrosRepository } from '../repositories/LivrosRepository';
+import { CreateLivroService } from '../services/CreateLivroService'
+import { DeleteLivroByIsbnService } from '../services/DeleteLivroByIsbnService';
+import { ListLivroByIsbnService } from '../services/ListLivroByIsbnService';
+import { ListLivroService } from '../services/ListLivroService'
+import { UpdateLivroByIsbnService } from '../services/UpdateLivroByIsbnService';
 
 const estoqueRoutes = Router();
 const livrosRepository = new LivrosRepository();
@@ -11,7 +16,8 @@ estoqueRoutes.get('/', (req, res) => {
     const page = parseInt(req.query.page)
     const limit = parseInt(req.query.limit) 
 
-    const estoqueLivros = livrosRepository.lista(page, limit)
+    const listLivroService = new ListLivroService(livrosRepository)
+    const estoqueLivros = listLivroService.execute({page, limit})
 
     return res.status(200).json(estoqueLivros)
     
@@ -20,7 +26,8 @@ estoqueRoutes.get('/', (req, res) => {
 estoqueRoutes.get('/:isbn', (req, res) => {
     const isbn = req.params.isbn
 
-    const infoLivro = livrosRepository.buscaPorIsbn(isbn)
+    const listLivroByIsbnService = new ListLivroByIsbnService(livrosRepository)
+    const infoLivro = listLivroByIsbnService.execute(isbn)
 
     return res.status(200).json(infoLivro)
 })
@@ -30,13 +37,8 @@ estoqueRoutes.get('/:isbn', (req, res) => {
 estoqueRoutes.post('/', (req, res) => {
     const {isbn, nome, autor, descricao, estoque } = req.body
 
-    const isbnJaAssociado = livrosRepository.buscaPorIsbn(isbn);
-
-    if(isbnJaAssociado){
-        return res.status(400).json({error: "ISBN já está associado a outro livro"}) 
-    }
-
-    livrosRepository.adiciona({isbn, nome, autor, descricao, estoque });
+    const createLivroService = new CreateLivroService(livrosRepository)
+    createLivroService.execute({isbn, nome, autor, descricao, estoque})
 
     return res.status(201).send()    
 })
@@ -44,16 +46,11 @@ estoqueRoutes.post('/', (req, res) => {
 /* PATCH */
 
 estoqueRoutes.patch('/:isbn', (req, res) => {
-    var livro = req.body
+    var { nome, autor, descricao, estoque} = req.body
     const isbn = req.params.isbn
 
-    const isbnJaAssociado = livrosRepository.buscaPorIsbn(isbn);
-
-    if(isbnJaAssociado){
-        return res.status(400).json({error: "ISBN já está associado a outro livro"}) 
-    }
-
-    livrosRepository.atualizaPorSbn(isbn, livro)
+    const updateLivroByIsbnService = new UpdateLivroByIsbnService(livrosRepository)
+    updateLivroByIsbnService.execute(isbn, { nome, autor, descricao, estoque})
 
     return res.status(200).send()
     
@@ -64,13 +61,8 @@ estoqueRoutes.patch('/:isbn', (req, res) => {
 estoqueRoutes.delete('/:isbn', (req, res) => {
     const isbn = req.params.isbn
 
-    const isbnJaAssociado = livrosRepository.buscaPorIsbn(isbn);
-
-    if(!isbnJaAssociado){
-        return res.status(400).json({error: "ISBN não localizado"}) 
-    }
-
-    livrosRepository.removePorSbn(isbn)
+    const deleteLivroByIsbnService = new DeleteLivroByIsbnService(livrosRepository)
+    deleteLivroByIsbnService.execute(isbn)
 
     return res.status(200).send()
     
