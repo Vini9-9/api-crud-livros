@@ -34,6 +34,8 @@ interface ILivrosRepository {
 
     setLivros(livros: Livro[]): void;
 
+    getLivros(): Livro[];
+
 }
 
 export { ILivrosRepository, ICreateLivroDTO, IListLivroDTO, IUpdateLivroDTO}

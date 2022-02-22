@@ -54,6 +54,10 @@ class LivrosRepository implements ILivrosRepository{
         this.livros = livros
     }
 
+    getLivros(): Livro[]{
+        return this.livros 
+    }
+
 }
 
 export { LivrosRepository }
