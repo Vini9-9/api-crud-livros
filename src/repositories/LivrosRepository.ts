@@ -1,27 +1,8 @@
 import { Livro } from '../model/Livro'
+import { ILivrosRepository, ICreateLivroDTO, IListLivroDTO, IUpdateLivroDTO} from './ILivrosRepository'
 
 
-interface ICreateLivroDTO {
-    isbn: string;
-    nome: string;
-    autor: string;
-    descricao?: string;
-    estoque: number;
-}
-
-interface IListLivroDTO {
-    page: number;
-    limit: number;
-}
-
-interface IUpdateLivroDTO {
-    nome?: string;
-    autor?: string;
-    descricao?: string;
-    estoque?: number;
-}
-
-class LivrosRepository {
+class LivrosRepository implements ILivrosRepository{
     private livros: Livro[];
 
     constructor(){

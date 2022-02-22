@@ -1,4 +1,4 @@
-import { LivrosRepository } from "../repositories/LivrosRepository";
+import { ILivrosRepository } from "../repositories/ILivrosRepository";
 
 interface IRequest {
     nome?: string;
@@ -9,7 +9,7 @@ interface IRequest {
 
 class UpdateLivroByIsbnService {
 
-    constructor(private livrosRepository: LivrosRepository){
+    constructor(private livrosRepository: ILivrosRepository){
 
     }
 

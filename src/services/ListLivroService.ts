@@ -1,5 +1,5 @@
 import { Livro } from "../model/Livro";
-import { LivrosRepository } from "../repositories/LivrosRepository";
+import { ILivrosRepository } from "../repositories/ILivrosRepository";
 
 interface IRequest {
     page: number;
@@ -8,7 +8,7 @@ interface IRequest {
 
 class ListLivroService {
 
-    constructor(private livrosRepository: LivrosRepository){
+    constructor(private livrosRepository: ILivrosRepository){
 
     }
 

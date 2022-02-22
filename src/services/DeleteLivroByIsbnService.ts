@@ -1,8 +1,8 @@
-import { LivrosRepository } from "../repositories/LivrosRepository";
+import { ILivrosRepository } from "../repositories/ILivrosRepository";
 
 class DeleteLivroByIsbnService {
 
-    constructor(private livrosRepository: LivrosRepository){
+    constructor(private livrosRepository: ILivrosRepository){
 
     }
 
