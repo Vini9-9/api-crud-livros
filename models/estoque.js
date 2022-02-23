@@ -1,4 +1,4 @@
-const conexaoBD = require('../infra/conexao')
+//const conexaoBD = require('../infra/conexao')
 
 class Estoque {
     adiciona(livro, res){
