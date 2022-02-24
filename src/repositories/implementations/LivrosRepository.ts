@@ -22,7 +22,7 @@ export class LivrosRepository implements ILivrosRepository{
         
     }
 
-    async lista({page, limit}: IListLivroDTO): Promise<Livro[]> {
+    async lista({page, limit}: IListLivroDTO): Promise<Livro[] | Error> {
 
         const pageNumber = page ? page : 1;
         const limitNumber = limit ? limit : 5;
@@ -34,7 +34,12 @@ export class LivrosRepository implements ILivrosRepository{
                 skip: (pageNumber-1) * limitNumber
             })
 
-        return resultados
+        if(resultados.length) {
+            return resultados
+        }
+
+        return new Error("Nenhum registro foi encontrado")
+
     }
 
     async removePorSbn(isbn: string): Promise<void | Error>{

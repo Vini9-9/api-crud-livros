@@ -12,7 +12,7 @@ export class ListLivrosUseCase {
 
     }
 
-    execute({page, limit}: IRequest): Promise<Livro[]>{
+    execute({page, limit}: IRequest): Promise<Livro[] | Error>{
         return this.livrosRepository.lista({page, limit});
     }
 }
