@@ -20,7 +20,7 @@ export class DeleteLivroController {
         return response.status(200).json(
             { 
                 isbn: isbn,
-                message: "Deletado com sucesso"
+                message: "Livro deletado com sucesso"
             }
         )
     }
