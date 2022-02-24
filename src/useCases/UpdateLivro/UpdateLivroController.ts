@@ -15,7 +15,7 @@ export class UpdateLivroController {
         const result = await this.updateLivroUseCase.execute(isbn, { nome, autor, descricao, estoque})
 
         if(result instanceof Error){
-            return response.status(400).json(result.message)
+            return response.status(404).json(result.message)
         }
         
         return response.json({ message: "Atualizado com sucesso"})

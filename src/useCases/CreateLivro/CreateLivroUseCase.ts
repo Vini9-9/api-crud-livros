@@ -19,7 +19,7 @@ export class CreateLivroUseCase {
         const isbnJaAssociado = await this.livrosRepository.buscaPorIsbn(isbn);
 
         if(isbnJaAssociado){
-            throw new Error("ISBN já está associado a outro livro");
+            return new Error("ISBN já está associado a outro livro");
         }
 
         this.livrosRepository.adiciona({isbn, nome, autor, descricao, estoque });

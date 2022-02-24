@@ -8,12 +8,12 @@ export class ListLivroByIsbnUseCase {
 
     }
 
-    async execute(isbn: string): Promise<Livro | undefined> {
+    async execute(isbn: string): Promise<Livro | Error> {
 
         const isbnJaAssociado = await this.livrosRepository.buscaPorIsbn(isbn);
 
         if(!isbnJaAssociado){
-            throw new Error("ISBN não localizado");
+            return new Error("ISBN não localizado");
         }
 
         return isbnJaAssociado;

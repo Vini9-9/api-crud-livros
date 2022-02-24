@@ -12,11 +12,9 @@ export class CreateLivroController {
         const {isbn, nome, autor, descricao, estoque} = request.body
 
         const result = await this.createLivroUseCase.execute({isbn, nome, autor, descricao, estoque}) 
-        //await this.createLivroUseCase.execute({isbn, nome, autor, descricao, estoque}) 
 
         if(result instanceof Error){
-            console.log("ENTROU ERRO")
-            return response.status(400).send()
+            return response.status(400).json(result.message)
         }
         
         return response.status(201).send()

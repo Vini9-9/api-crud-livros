@@ -14,7 +14,7 @@ export class ListLivrosController {
         const result = await this.listLivrosUseCase.execute({ page , limit }) 
 
         if(result instanceof Error){
-            return response.status(400)
+            return response.status(400).json(result.message)
         }
         
         return response.json(result)

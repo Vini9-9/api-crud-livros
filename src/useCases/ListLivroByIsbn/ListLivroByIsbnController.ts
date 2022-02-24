@@ -14,7 +14,7 @@ export class ListLivroByIsbnController {
         const result = await this.listLivrosUseCase.execute(isbn) 
 
         if(result instanceof Error){
-            return response.status(400)
+            return response.status(404).json(result.message)
         }
         
         return response.json(result)

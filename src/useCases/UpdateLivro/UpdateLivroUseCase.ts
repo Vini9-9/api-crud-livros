@@ -16,7 +16,7 @@ export class UpdateLivroUseCase {
     async execute(isbn: string, { nome, autor, descricao, estoque}: IRequest): Promise<void | Error>{
         const isbnJaAssociado = await this.livrosRepository.buscaPorIsbn(isbn);
         if(!isbnJaAssociado){
-            throw new Error("ISBN não localizado");
+            return new Error("ISBN não localizado");
         }
 
         const livrosEstoque = this.livrosRepository.atualizaPorSbn(isbnJaAssociado, { nome, autor, descricao, estoque});

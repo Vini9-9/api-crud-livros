@@ -9,7 +9,7 @@ export class DeleteLivroUseCase {
     async execute(isbn: string): Promise<void | Error>{
         const isbnJaAssociado = await this.livrosRepository.buscaPorIsbn(isbn);
         if(!isbnJaAssociado){
-            throw new Error("ISBN não localizado");
+            return new Error("ISBN não localizado");
         }
 
         this.livrosRepository.removePorSbn(isbn);

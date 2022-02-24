@@ -14,7 +14,7 @@ export class DeleteLivroController {
         const result = await this.deleteLivroUseCase.execute(isbn)
 
         if(result instanceof Error){
-            return response.status(400).json(result.message)
+            return response.status(404).json(result.message)
         }
         
         return response.json({ message: "Deletado com sucesso"})
