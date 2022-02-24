@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon index.js",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_moules --respawn src/server.ts",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "test": "jest ./test"
   },
   "repository": {
@@ -21,10 +22,11 @@
   "dependencies": {
     "express": "^4.17.2",
     "mysql2": "^2.3.3",
-    "path": "^0.12.7",
-    "sequelize": "^6.16.2",
-    "sequelize-cli": "^6.4.1",
+    "pg": "^8.7.3",
+    "reflect-metadata": "^0.1.13",
     "tsc-init": "^2.1.0",
+    "tsconfig-paths": "^3.12.0",
+    "typeorm": "^0.2.43",
     "typescript": "^4.5.5"
   },
   "devDependencies": {

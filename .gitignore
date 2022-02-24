@@ -1,3 +1,5 @@
 node_modules/
 infra/conexao.js
 src/config/config.json
+ormconfig.json
+.env
