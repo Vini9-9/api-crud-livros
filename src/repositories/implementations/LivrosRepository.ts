@@ -7,19 +7,10 @@ export class LivrosRepository implements ILivrosRepository{
 
     private repository: Repository<Livro>;
 
-    private static INSTANCE: LivrosRepository;
-
     constructor(){
         this.repository = getRepository(Livro);
     }
 
-/*     public static getInstance(): LivrosRepository {
-        if(!LivrosRepository.INSTANCE){
-            LivrosRepository.INSTANCE = new LivrosRepository();
-        }
-        
-        return LivrosRepository.INSTANCE
-    } */
     
     async adiciona({isbn, nome, autor, descricao, estoque}: ICreateLivroDTO): Promise<void> {
 
@@ -31,9 +22,21 @@ export class LivrosRepository implements ILivrosRepository{
         
     }
 
-    async lista({page, limit}: IListLivroDTO): Promise<Livro[]> {
-        const livros = await this.repository.find();
-        return livros
+    async lista({page, limit}: IListLivroDTO): Promise<string[]> {
+        const resultados = await this.repository.find();
+
+        let resultadosNomes: string[] = []
+
+        resultados.forEach( resultado => {
+            resultadosNomes.push(resultado.nome)
+        })
+
+        
+        //resultadosPagina.resultados = resultadosNomes.slice(firstIndex, lastIndex)
+        
+        //resultadosPagina.totalPagina = resultadosPagina.resultados.length
+
+        return resultadosNomes
     }
 
     async removePorSbn(isbn: string): Promise<void | Error>{
