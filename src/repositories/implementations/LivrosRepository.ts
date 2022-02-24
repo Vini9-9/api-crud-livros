@@ -25,7 +25,7 @@ export class LivrosRepository implements ILivrosRepository{
     async lista({page, limit}: IListLivroDTO): Promise<Livro[]> {
 
         const pageNumber = page ? page : 1;
-        const limitNumber = limit ? limit : 2;
+        const limitNumber = limit ? limit : 5;
 
         const resultados = await this.repository.find(
             {
