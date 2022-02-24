@@ -1,9 +1,8 @@
 import "reflect-metadata";
-
 import express  from "express";
+import "./database"
 import { estoqueRoutes } from "./routes/estoque.routes";
 
-import "./database"
 
 const app = express()
 

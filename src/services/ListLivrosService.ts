@@ -1,4 +1,4 @@
-import { Livro } from "../model/Livro";
+import { Livro } from "../entities/Livro";
 import { ILivrosRepository } from "../repositories/ILivrosRepository";
 
 interface IRequest {
@@ -6,16 +6,14 @@ interface IRequest {
     limit: number;
 }
 
-class ListLivroService {
+export class ListLivrosService {
 
     constructor(private livrosRepository: ILivrosRepository){
 
     }
 
-    execute({page, limit}: IRequest): Livro[]{
+    execute({page, limit}: IRequest): Promise<Livro[]>{
 
         return this.livrosRepository.lista({page, limit});
     }
 }
-
-export { ListLivroService }

@@ -8,15 +8,11 @@ export class CreateLivros1645661098847 implements MigrationInterface {
                 name: "Livros",
                 columns: [
                     {
-                        name: "id",
-                        type: "uuid",
-                        isPrimary: true
-                    },
-                    {
                         name: "isbn",
                         type: "varchar",
                         isNullable: false,
-                        isUnique: true
+                        isUnique: true,
+                        isPrimary: true
                     },
                     {
                         name: "nome",

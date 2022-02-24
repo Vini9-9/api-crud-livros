@@ -1,4 +1,4 @@
-import { Livro } from '../model/Livro'
+import { Livro } from '../entities/Livro'
 
 
 interface ICreateLivroDTO {
@@ -22,19 +22,15 @@ interface IUpdateLivroDTO {
 }
 
 interface ILivrosRepository {
-    adiciona({isbn, nome, autor, descricao, estoque}: ICreateLivroDTO): void;
+    adiciona({isbn, nome, autor, descricao, estoque}: ICreateLivroDTO): Promise<void>;
 
-    lista({page, limit}: IListLivroDTO): Livro[];
+    lista({page, limit}: IListLivroDTO):Promise<Livro[]>;
 
-    removePorSbn(isbn: string): Livro[];
+    removePorSbn(isbn: string): Promise<void | Error>;
 
-    atualizaPorSbn(isbn: string, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Livro[];
+    atualizaPorSbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro>;
 
-    buscaPorIsbn(isbn: string): Livro | undefined;
-
-    setLivros(livros: Livro[]): void;
-
-    getLivros(): Livro[];
+    buscaPorIsbn(isbn: string): Promise<Livro | undefined>;
 
 }
 
