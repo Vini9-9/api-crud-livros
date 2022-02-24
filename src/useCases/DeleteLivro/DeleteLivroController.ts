@@ -17,6 +17,11 @@ export class DeleteLivroController {
             return response.status(404).json(result.message)
         }
         
-        return response.json({ message: "Deletado com sucesso"})
+        return response.status(200).json(
+            { 
+                isbn: isbn,
+                message: "Deletado com sucesso"
+            }
+        )
     }
 }
