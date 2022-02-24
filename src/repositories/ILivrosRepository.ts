@@ -24,7 +24,7 @@ interface IUpdateLivroDTO {
 interface ILivrosRepository {
     adiciona({isbn, nome, autor, descricao, estoque}: ICreateLivroDTO): Promise<void>;
 
-    lista({page, limit}: IListLivroDTO):Promise<string[]>;
+    lista({page, limit}: IListLivroDTO):Promise<Livro[]>;
 
     removePorSbn(isbn: string): Promise<void | Error>;
 

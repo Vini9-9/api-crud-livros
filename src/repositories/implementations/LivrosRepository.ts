@@ -22,21 +22,19 @@ export class LivrosRepository implements ILivrosRepository{
         
     }
 
-    async lista({page, limit}: IListLivroDTO): Promise<string[]> {
-        const resultados = await this.repository.find();
+    async lista({page, limit}: IListLivroDTO): Promise<Livro[]> {
 
-        let resultadosNomes: string[] = []
+        const pageNumber = page ? page : 1;
+        const limitNumber = limit ? limit : 2;
 
-        resultados.forEach( resultado => {
-            resultadosNomes.push(resultado.nome)
-        })
+        const resultados = await this.repository.find(
+            {
+                select: ["nome"], 
+                take: limitNumber,
+                skip: (pageNumber-1) * limitNumber
+            })
 
-        
-        //resultadosPagina.resultados = resultadosNomes.slice(firstIndex, lastIndex)
-        
-        //resultadosPagina.totalPagina = resultadosPagina.resultados.length
-
-        return resultadosNomes
+        return resultados
     }
 
     async removePorSbn(isbn: string): Promise<void | Error>{
