@@ -7,9 +7,19 @@ export class LivrosRepository implements ILivrosRepository{
 
     private repository: Repository<Livro>;
 
+    private static INSTANCE: LivrosRepository;
+
     constructor(){
         this.repository = getRepository(Livro);
     }
+
+/*     public static getInstance(): LivrosRepository {
+        if(!LivrosRepository.INSTANCE){
+            LivrosRepository.INSTANCE = new LivrosRepository();
+        }
+        
+        return LivrosRepository.INSTANCE
+    } */
     
     async adiciona({isbn, nome, autor, descricao, estoque}: ICreateLivroDTO): Promise<void> {
 

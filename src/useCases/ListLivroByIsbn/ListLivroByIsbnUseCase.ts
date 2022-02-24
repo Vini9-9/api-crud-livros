@@ -1,8 +1,8 @@
-import { Livro } from "../entities/Livro";
-import { ILivrosRepository } from "../repositories/ILivrosRepository";
+import { Livro } from "../../entities/Livro";
+import { ILivrosRepository } from "../../repositories/ILivrosRepository";
 
 
-export class ListLivroByIsbnService {
+export class ListLivroByIsbnUseCase {
 
     constructor(private livrosRepository: ILivrosRepository){
 

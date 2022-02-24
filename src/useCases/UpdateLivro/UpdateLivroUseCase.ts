@@ -1,4 +1,4 @@
-import { ILivrosRepository } from "../repositories/ILivrosRepository";
+import { ILivrosRepository } from "../../repositories/ILivrosRepository";
 
 interface IRequest {
     nome?: string;
@@ -7,7 +7,7 @@ interface IRequest {
     estoque?: number;
 }
 
-export class UpdateLivroService {
+export class UpdateLivroUseCase {
 
     constructor(private livrosRepository: ILivrosRepository){
 
@@ -20,6 +20,5 @@ export class UpdateLivroService {
         }
 
         const livrosEstoque = this.livrosRepository.atualizaPorSbn(isbnJaAssociado, { nome, autor, descricao, estoque});
-        //this.livrosRepository.setLivros(livrosEstoque);
     }
 }

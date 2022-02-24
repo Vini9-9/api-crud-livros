@@ -1,6 +1,6 @@
-import { ILivrosRepository } from "../repositories/ILivrosRepository";
+import { ILivrosRepository } from "../../repositories/ILivrosRepository";
 
-export class DeleteLivroService {
+export class DeleteLivroUseCase {
 
     constructor(private livrosRepository: ILivrosRepository){
 

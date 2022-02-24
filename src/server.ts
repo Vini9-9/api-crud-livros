@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import express  from "express";
 import "./database"
-import { estoqueRoutes } from "./routes/estoque.routes";
+import { router } from "./routes";
 
 
 const app = express()
@@ -9,6 +9,6 @@ const app = express()
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
-app.use("/estoque", estoqueRoutes);
+app.use(router);
 
 app.listen(4000, () => console.log("Rodando servidor na porta 4000"))

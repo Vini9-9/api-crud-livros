@@ -1,4 +1,4 @@
-import { ILivrosRepository } from "../repositories/ILivrosRepository";
+import { ILivrosRepository } from "../../repositories/ILivrosRepository";
 
 interface IRequest {
     isbn: string;
@@ -8,14 +8,16 @@ interface IRequest {
     estoque: number;
 }
 
-export class CreateLivroService {
+export class CreateLivroUseCase {
 
     constructor(private livrosRepository: ILivrosRepository){
         
     }
 
-    async execute({isbn, nome, autor, descricao, estoque}: IRequest): Promise<void>{
+    async execute({isbn, nome, autor, descricao, estoque}: IRequest): Promise<void | Error>{
+
         const isbnJaAssociado = await this.livrosRepository.buscaPorIsbn(isbn);
+
         if(isbnJaAssociado){
             throw new Error("ISBN já está associado a outro livro");
         }
