@@ -15,6 +15,7 @@ interface IListLivroDTO {
 }
 
 interface IUpdateLivroDTO {
+    isbn?: string;
     nome?: string;
     autor?: string;
     descricao?: string;
@@ -28,7 +29,7 @@ interface ILivrosRepository {
 
     removePorSbn(isbn: string): Promise<void | Error>;
 
-    atualizaPorSbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro>;
+    atualizaPorSbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro | object[]>;
 
     buscaPorIsbn(isbn: string): Promise<Livro | undefined>;
 

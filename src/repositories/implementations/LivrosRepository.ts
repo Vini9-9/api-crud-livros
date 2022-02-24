@@ -46,8 +46,8 @@ export class LivrosRepository implements ILivrosRepository{
         await this.repository.delete(isbn);
     }
 
-    async atualizaPorSbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro>{
-        
+    async atualizaPorSbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro | object[]>{
+
         livro.nome = nome ? nome : livro.nome;
         livro.autor = autor ? autor : livro.autor;
         livro.descricao = descricao ? descricao : livro.descricao;

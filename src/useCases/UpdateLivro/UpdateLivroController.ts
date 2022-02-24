@@ -9,15 +9,20 @@ export class UpdateLivroController {
     }
 
     async handle(request: Request, response: Response){
-        const isbn = request.params.isbn
-        const { nome, autor, descricao, estoque } = request.body
+        const isbnParam = request.params.isbn
+        const { isbn, nome, autor, descricao, estoque } = request.body
 
-        const result = await this.updateLivroUseCase.execute(isbn, { nome, autor, descricao, estoque})
+        const result = await this.updateLivroUseCase.execute(isbnParam, { isbn, nome, autor, descricao, estoque})
+        const temErroCampo = typeof result === 'object'
+        
 
         if(result instanceof Error){
             return response.status(404).json(result.message)
+        } else if(temErroCampo){
+            return response.status(400).json(result)
         }
         
-        return response.json({ message: "Atualizado com sucesso"})
+        return response.json(result)
+        
     }
 }
