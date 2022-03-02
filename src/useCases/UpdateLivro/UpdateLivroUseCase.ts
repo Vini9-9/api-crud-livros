@@ -51,7 +51,7 @@ export class UpdateLivroUseCase {
             return erros;
         }
 
-        const livroAtualizado = this.livrosRepository.atualizaPorSbn(isbnJaAssociado, { nome, autor, descricao, estoque});
+        const livroAtualizado = this.livrosRepository.atualizaPorIsbn(isbnJaAssociado, { nome, autor, descricao, estoque});
 
         return livroAtualizado
     }

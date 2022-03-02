@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import { Livro } from '../../entities/Livro'
-import { ILivrosRepository, ICreateLivroDTO, IListLivroDTO, IUpdateLivroDTO} from '../ILivrosRepository'
+import { ILivrosRepository, ICreateLivroDTO, IPageLivroDTO, IUpdateLivroDTO} from '../ILivrosRepository'
 
 
 export class LivrosRepository implements ILivrosRepository{
@@ -22,31 +22,51 @@ export class LivrosRepository implements ILivrosRepository{
         
     }
 
-    async lista({page, limit}: IListLivroDTO): Promise<Livro[] | Error> {
+    async lista(): Promise<Livro[]> {
 
-        const pageNumber = page ? page : 1;
-        const limitNumber = limit ? limit : 5;
-
-        const resultados = await this.repository.find(
-            {
-                select: ["nome"], 
-                take: limitNumber,
-                skip: (pageNumber-1) * limitNumber
-            })
-
-        if(resultados.length) {
-            return resultados
-        }
-
-        return new Error("Nenhum registro foi encontrado")
+        const resultados = await this.repository.find()
+        return resultados
 
     }
+
+    async pagina({ page, limit }: IPageLivroDTO): Promise<Livro[]> {
+        
+        const pageNumber = page ? page : 1;
+        const limitNumber = limit ? limit : 5;
+    
+        const resultados = await this.repository.find(
+            {
+                take: limitNumber,
+                skip: (pageNumber-1) * limitNumber,
+
+                order: {
+                    isbn: "ASC",
+                }
+                
+            })
+    
+        return resultados
+
+    }
+
+    async exibePorPropriedade(livros:Livro[] , propriedade:string ): Promise<Livro[]> {
+
+        function getFields(array: any[], field: string ) {
+            return array.map(a => a[field]);
+        }
+
+        var livrosPorPropriedade = getFields(livros, propriedade)
+    
+        return livrosPorPropriedade
+
+    }
+
 
     async removePorSbn(isbn: string): Promise<void | Error>{
         await this.repository.delete(isbn);
     }
 
-    async atualizaPorSbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro | object[]>{
+    async atualizaPorIsbn(livro: Livro, { nome, autor, descricao, estoque}: IUpdateLivroDTO): Promise<Livro | object[]>{
 
         livro.nome = nome ? nome : livro.nome;
         livro.autor = autor ? autor : livro.autor;

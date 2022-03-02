@@ -17,7 +17,7 @@ export class CreateLivroUseCase {
     async execute({isbn, nome, autor, descricao, estoque}: IRequest): Promise<void | Error | object[]>{
 
         const isbnJaAssociado = await this.livrosRepository.buscaPorIsbn(isbn);
-
+        
         if(isbnJaAssociado){
             return new Error("ISBN já está associado a outro livro");
         }

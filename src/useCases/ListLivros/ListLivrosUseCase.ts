@@ -12,7 +12,16 @@ export class ListLivrosUseCase {
 
     }
 
-    execute({page, limit}: IRequest): Promise<Livro[] | Error>{
-        return this.livrosRepository.lista({page, limit});
+    async execute({page, limit}: IRequest): Promise<Livro[] | Error>{
+        
+         const resultadoPaginado = await this.livrosRepository.pagina({page, limit});
+         const resultadoNomes = await this.livrosRepository.exibePorPropriedade(resultadoPaginado, "nome");
+
+         if(resultadoNomes.length){
+             return resultadoNomes
+         }
+
+         return new Error("Nenhum registro foi encontrado")
+
     }
 }
