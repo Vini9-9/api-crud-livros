@@ -1,6 +1,19 @@
 version: "3.7"
 
 services:
+  database_estoque:
+    image: postgres
+    container_name: database_estoque
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=estoque
+      - POSTGRES_DB=estoque_livros
+    volumes:
+      - pgdata:/data/postgres
+    
   app:
     build: .
     container_name: container-api
@@ -8,4 +21,11 @@ services:
       - 4000:4000
     volumes:
       - .:/usr/app
+    links:
+      - database_estoque
+    depends_on: 
+      - database_estoque
 
+volumes:
+  pgdata:
+    driver: local
