@@ -12,7 +12,7 @@ describe("Create Livro", () => {
         createLivroUseCase = new CreateLivroUseCase(livrosRepositoryInMemory)
     })
     
-/*     it("deve adicionar um livro no estoque", async () => {
+    it("Deve adicionar um livro no estoque", async () => {
 
         const novoLivro = {
             isbn: "1",
@@ -22,14 +22,7 @@ describe("Create Livro", () => {
             estoque: 100
         }
 
-        await createLivroUseCase.execute({
-            isbn: novoLivro.isbn,
-            nome: novoLivro.nome,
-            autor: novoLivro.autor,
-            descricao: novoLivro.descricao,
-            estoque: novoLivro.estoque,
-            
-        })
+        await createLivroUseCase.execute(novoLivro)
 
         const livroCriado = await livrosRepositoryInMemory.buscaPorIsbn(novoLivro.isbn)
 
@@ -41,39 +34,40 @@ describe("Create Livro", () => {
         expect(livroCriado?.descricao).toBe(novoLivro.descricao);
         expect(livroCriado?.estoque).toBe(novoLivro.estoque);
  
-    }) */
+    })
+    it("Não deve adicionar um livro com estoque negativo", async () => {
+
+        const novoLivro = {
+            isbn: "1",
+            nome: "nome do Livro",
+            autor: "autor do livro",
+            descricao: "descricao do livro",
+            estoque: -4
+        }
+
+        const result = await createLivroUseCase.execute(novoLivro)
+        const msgErroEstoque = [{"campo": "estoque", "mensagem": "Estoque deve ser maior que 0", "valido": undefined}]
+        
+        expect(result).toBeInstanceOf(Array);
+        expect(result).toHaveLength(1);
+ 
+    })
 
     it("Não deve adicionar um livro com o mesmo isbn", async () => {
-        debugger;
-        expect(async () => {
 
-            const novoLivro = {
-                isbn: "1",
-                nome: "nome do Livro",
-                autor: "autor do livro",
-                descricao: "descricao do livro",
-                estoque: 100
-            }
-    
-            await createLivroUseCase.execute({
-                isbn: novoLivro.isbn,
-                nome: novoLivro.nome,
-                autor: novoLivro.autor,
-                descricao: novoLivro.descricao,
-                estoque: novoLivro.estoque,
-                
-            })
-    
-            await createLivroUseCase.execute({
-                isbn: novoLivro.isbn,
-                nome: novoLivro.nome,
-                autor: novoLivro.autor,
-                descricao: novoLivro.descricao,
-                estoque: novoLivro.estoque,
-                
-            })
+        const novoLivro = {
+            isbn: "1",
+            nome: "nome do Livro",
+            autor: "autor do livro",
+            descricao: "descricao do livro",
+            estoque: 100
+        }
 
-        }).toBeInstanceOf(Function)
+        await createLivroUseCase.execute(novoLivro)
+
+        const result = await createLivroUseCase.execute(novoLivro)
+
+        expect(result).toBeInstanceOf(Error);
 
     });
 })
