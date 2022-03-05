@@ -50,8 +50,14 @@ describe("Create Livro", () => {
         
         expect(result).toBeInstanceOf(Array);
         expect(result).toHaveLength(1);
- 
-    })
+
+        expect(result).toEqual(
+            expect.arrayContaining([
+              expect.objectContaining({"campo": "estoque"}),
+              expect.objectContaining({"mensagem": "Estoque deve ser maior que 0"})
+            ])
+          );
+        });
 
     it("Não deve adicionar um livro com o mesmo isbn", async () => {
 
