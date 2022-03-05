@@ -50,8 +50,8 @@ export class LivrosRepositoryInMemory implements ILivrosRepository {
 
     async pagina({ page, limit }: IPageLivroDTO): Promise<Livro[]> {
 
-        const pageNumber = page ? page : 1;
-        const limitNumber = limit ? limit : 5;
+        const pageNumber = page > 0 ? page : 1;
+        const limitNumber = limit > 0 ? limit : 5;
 
         const startIndex = (pageNumber - 1) * limitNumber;
         const endIndex = pageNumber * limitNumber;
@@ -77,6 +77,10 @@ export class LivrosRepositoryInMemory implements ILivrosRepository {
 
     async removePorSbn(isbn: string): Promise<void | Error> {
         this.livros = this.livros.filter(livro => livro.isbn != isbn);
+    }
+
+    async limpaRepository(): Promise<void | Error> {
+        this.livros = [];
     }
 
     async atualizaPorIsbn(livro: Livro, { nome, autor, descricao, estoque }: IUpdateLivroDTO): Promise<Livro | object[]> {
