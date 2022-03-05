@@ -35,6 +35,7 @@ describe("Create Livro", () => {
         expect(livroCriado?.estoque).toBe(novoLivro.estoque);
  
     })
+    
     it("Não deve adicionar um livro com estoque negativo", async () => {
 
         const novoLivro = {
@@ -46,7 +47,6 @@ describe("Create Livro", () => {
         }
 
         const result = await createLivroUseCase.execute(novoLivro)
-        const msgErroEstoque = [{"campo": "estoque", "mensagem": "Estoque deve ser maior que 0", "valido": undefined}]
         
         expect(result).toBeInstanceOf(Array);
         expect(result).toHaveLength(1);
@@ -61,6 +61,8 @@ describe("Create Livro", () => {
 
     it("Não deve adicionar um livro com o mesmo isbn", async () => {
 
+        const msgErroISBN = "ISBN já está associado a outro livro"
+
         const novoLivro = {
             isbn: "1",
             nome: "nome do Livro",
@@ -73,7 +75,11 @@ describe("Create Livro", () => {
 
         const result = await createLivroUseCase.execute(novoLivro)
 
-        expect(result).toBeInstanceOf(Error);
+        expect(result).toBeInstanceOf(Error)
+
+        expect.arrayContaining([
+            expect.objectContaining({Error: msgErroISBN}),
+          ])
 
     });
 })
