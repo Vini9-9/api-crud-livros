@@ -1,32 +1,31 @@
+import { Livro } from "src/entities/Livro";
 import { LivrosRepositoryInMemory } from "../../repositories/in-memory/LivrosRepositoryInMemory"
 import { CreateLivroUseCase } from "./CreateLivroUseCase"
 
 
 let livrosRepositoryInMemory: LivrosRepositoryInMemory;
 let createLivroUseCase: CreateLivroUseCase;
+let novoLivro: Livro;
 
 describe("Create Livro", () => {
 
     beforeEach(() => {
         livrosRepositoryInMemory = new LivrosRepositoryInMemory()
         createLivroUseCase = new CreateLivroUseCase(livrosRepositoryInMemory)
-    })
-    
-    it("Deve adicionar um livro no estoque", async () => {
-
-        const novoLivro = {
+        novoLivro = {
             isbn: "1",
             nome: "nome do Livro",
             autor: "autor do livro",
             descricao: "descricao do livro",
             estoque: 100
         }
+    })
+    
+    it("Deve adicionar um livro no estoque", async () => {
 
         await createLivroUseCase.execute(novoLivro)
 
         const livroCriado = await livrosRepositoryInMemory.buscaPorIsbn(novoLivro.isbn)
-
-        expect(livroCriado).toBeDefined();
 
         expect(livroCriado?.isbn).toBe(novoLivro.isbn);
         expect(livroCriado?.nome).toBe(novoLivro.nome);
@@ -38,7 +37,7 @@ describe("Create Livro", () => {
     
     it("Não deve adicionar um livro com estoque negativo", async () => {
 
-        const novoLivro = {
+        novoLivro = {
             isbn: "1",
             nome: "nome do Livro",
             autor: "autor do livro",
@@ -47,9 +46,6 @@ describe("Create Livro", () => {
         }
 
         const result = await createLivroUseCase.execute(novoLivro)
-        
-        expect(result).toBeInstanceOf(Array);
-        expect(result).toHaveLength(1);
 
         expect(result).toEqual(
             expect.arrayContaining([
@@ -57,19 +53,11 @@ describe("Create Livro", () => {
               expect.objectContaining({"mensagem": "Estoque deve ser maior que 0"})
             ])
           );
-        });
+    });
 
     it("Não deve adicionar um livro com o mesmo isbn", async () => {
 
         const msgErroISBN = "ISBN já está associado a outro livro"
-
-        const novoLivro = {
-            isbn: "1",
-            nome: "nome do Livro",
-            autor: "autor do livro",
-            descricao: "descricao do livro",
-            estoque: 100
-        }
 
         await createLivroUseCase.execute(novoLivro)
 
