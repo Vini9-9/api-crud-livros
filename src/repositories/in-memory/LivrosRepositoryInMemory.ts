@@ -49,7 +49,7 @@ export class LivrosRepositoryInMemory implements ILivrosRepository {
 
 
     async removePorSbn(isbn: string): Promise<void | Error> {
-        this.livros.filter(livro => livro.isbn != isbn);
+        this.livros = this.livros.filter(livro => livro.isbn != isbn);
     }
 
     async atualizaPorIsbn(livro: Livro, { nome, autor, descricao, estoque }: IUpdateLivroDTO): Promise<Livro | object[]> {
