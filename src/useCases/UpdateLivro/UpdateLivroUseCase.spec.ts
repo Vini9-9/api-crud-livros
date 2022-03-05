@@ -17,7 +17,7 @@ describe("Update Livro", () => {
         updateLivroUseCase = new UpdateLivroUseCase(livrosRepositoryInMemory)
 
         novoLivro = {
-            isbn: "1",
+            isbn: "1-teste",
             nome: "nome do Livro",
             autor: "autor do livro",
             descricao: "descricao do livro",
@@ -103,7 +103,7 @@ describe("Update Livro", () => {
 
     it("Não deve atualizar um livro com isbn inexistente", async () => {
         
-        const isbn = "99"
+        const isbn = "99-teste"
         
         const atualizacoesLivro = {
             nome: "Livro que não existe"
@@ -124,7 +124,7 @@ describe("Update Livro", () => {
     it("Não deve atualizar o isbn de um livro", async () => {
 
         const atualizacoesLivro = {
-            isbn: "10"
+            isbn: "10-teste"
         }
 
         const result = await updateLivroUseCase.execute(novoLivro.isbn, atualizacoesLivro)

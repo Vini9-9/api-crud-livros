@@ -3,8 +3,35 @@ import { ICreateLivroDTO, IPageLivroDTO, ILivrosRepository, IUpdateLivroDTO } fr
 
 
 export class LivrosRepositoryInMemory implements ILivrosRepository {
-
+    
     livros: Livro[] = [];
+    
+    constructor () {
+        this.livros = [
+            {
+                isbn: "0",
+                nome: "nome do primeiro Livro",
+                autor: "autor do primeiro livro",
+                descricao: "descricao do primeiro livro",
+                estoque: 100
+            },
+            {
+                isbn: "1",
+                nome: "nome do segundo Livro",
+                autor: "autor do segundo livro",
+                descricao: "descricao do segundo livro",
+                estoque: 102
+            },
+            {
+                isbn: "2",
+                nome: "nome do terceiro Livro",
+                autor: "autor do terceiro livro",
+                descricao: "descricao do terceiro livro",
+                estoque: 103
+            }
+        ]
+    }
+
 
     async adiciona({ isbn, nome, autor, descricao, estoque }: ICreateLivroDTO): Promise<void> {
         

@@ -18,7 +18,7 @@ describe("List Livro by ISBN", () => {
         listLivroByIsbnUseCase = new ListLivroByIsbnUseCase(livrosRepositoryInMemory)
 
         novoLivro = {
-            isbn: "1",
+            isbn: "1-teste",
             nome: "nome do Livro",
             autor: "autor do livro",
             descricao: "descricao do livro",
@@ -26,7 +26,7 @@ describe("List Livro by ISBN", () => {
         }
 
         outroLivro = {
-            isbn: "2",
+            isbn: "2-teste",
             nome: "nome do outro Livro",
             autor: "autor do outro livro",
             descricao: "descricao do outro livro",
@@ -56,7 +56,7 @@ describe("List Livro by ISBN", () => {
 
     it("Não deve listar um livro com isbn inexistente", async () => {
 
-        const isbn = "99"
+        const isbn = "99-teste"
         const result = await listLivroByIsbnUseCase.execute(isbn)
         
         const msgErroISBN = "ISBN não localizado"

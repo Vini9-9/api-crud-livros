@@ -15,8 +15,9 @@ describe("Delete Livro", () => {
         livrosRepositoryInMemory = new LivrosRepositoryInMemory()
         createLivroUseCase = new CreateLivroUseCase(livrosRepositoryInMemory)
         deleteLivroUseCase = new DeleteLivroUseCase(livrosRepositoryInMemory)
+
         novoLivro = {
-            isbn: "1",
+            isbn: "1-teste",
             nome: "nome do Livro",
             autor: "autor do livro",
             descricao: "descricao do livro",
@@ -38,7 +39,7 @@ describe("Delete Livro", () => {
 
     it("Não deve deletar um livro com isbn que não existe", async () => {
 
-        const isbn = "1"
+        const isbn = "99-teste"
         const result = await deleteLivroUseCase.execute(isbn)
         
         const msgErroISBN = "ISBN não localizado"

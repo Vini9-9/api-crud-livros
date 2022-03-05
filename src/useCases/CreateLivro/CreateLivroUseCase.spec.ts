@@ -12,8 +12,9 @@ describe("Create Livro", () => {
     beforeEach(() => {
         livrosRepositoryInMemory = new LivrosRepositoryInMemory()
         createLivroUseCase = new CreateLivroUseCase(livrosRepositoryInMemory)
+
         novoLivro = {
-            isbn: "1",
+            isbn: "1-teste",
             nome: "nome do Livro",
             autor: "autor do livro",
             descricao: "descricao do livro",
@@ -38,7 +39,7 @@ describe("Create Livro", () => {
     it("Não deve adicionar um livro com estoque negativo", async () => {
 
         novoLivro = {
-            isbn: "1",
+            isbn: "1-teste",
             nome: "nome do Livro",
             autor: "autor do livro",
             descricao: "descricao do livro",
