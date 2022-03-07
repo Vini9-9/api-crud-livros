@@ -1,21 +1,21 @@
 import { Column, Entity, PrimaryColumn } from "typeorm";
 
-@Entity("Livros")
-export class Livro {
+@Entity("livros")
+class Livro {
     @PrimaryColumn()
-    isbn: string;
+    isbn?: string;
 
     @Column()
-    nome: string;
+    nome?: string;
 
     @Column()
-    autor: string;
+    autor?: string;
 
     @Column()
     descricao?: string;
 
     @Column()
-    estoque: number;
+    estoque?: number;
 
 
     constructor(){
@@ -23,3 +23,5 @@ export class Livro {
     }
 
 }
+
+export { Livro };
