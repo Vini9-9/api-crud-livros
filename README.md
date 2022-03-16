@@ -1,19 +1,18 @@
 # Gerenciamento de estoque de livros
 ## Overview do projeto
-Trata-se de un microserviço para expor APIs de CRUD de livros
+Trata-se de um microserviço para expor APIs de CRUD de livros
 
 ### Tecnologias utilizadas:
 * NodeJS
 * Express
 * Banco de dados ( MongoDB, Mysql)
 * Testes (Jest)
-* Docker
+* Docker (branch: docker)
 * Typescript
 
 ## Funcionalidades
 ### Cadastro de livro
 
-**RF**
 - Deve ser possível cadastrar um novo Livro no estoque.
 
 **Regras de Negócio** 
