@@ -4,11 +4,12 @@ Trata-se de um microserviço para expor APIs de CRUD de livros
 
 ### Tecnologias utilizadas:
 * NodeJS
-* Express
-* Banco de dados ( MongoDB, Mysql)
-* Testes (Jest)
-* Docker (branch: docker)
 * Typescript
+* Express
+* Banco de dados (MongoDB, Mysql)
+* Jest (Testes)
+* TypeORM (ORM)
+* Docker (branch: docker)
 
 ## Funcionalidades
 ### Cadastro de livro
